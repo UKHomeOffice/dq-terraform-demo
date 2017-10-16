@@ -5,10 +5,10 @@ pipeline:
     commands:
       - terraform init
 
-  validate:
-    image: hashicorp/terraform:light
-    commands:
-      - terraform validate
+#  validate:
+#    image: hashicorp/terraform:light
+#    commands:
+#      - terraform validate
 
   plan:
     image: hashicorp/terraform:light
