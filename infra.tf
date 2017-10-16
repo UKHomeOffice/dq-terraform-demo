@@ -11,12 +11,21 @@ terraform {
   }
 }
 
-data "aws_ami" "packer_demo" {
+data "aws_ami" "packer_linux_demo" {
   most_recent = true
   filter {
     name = "name"
     values = [
       "dq-packer-demo*"]
+  }
+}
+
+data "aws_ami" "packer_win_demo" {
+  most_recent = true
+  filter {
+    name = "name"
+    values = [
+      "dq-packer-win-demo*"]
   }
 }
 
@@ -33,13 +42,24 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "linux" {
   instance_type = "t2.micro"
-  ami = "${data.aws_ami.packer_demo.id}"
+  ami = "${data.aws_ami.packer_linux_demo.id}"
   security_groups = [
     "allow_http"]
 }
 
-output "public dns" {
-  value = "${aws_instance.web.public_dns}"
+resource "aws_instance" "windows" {
+  instance_type = "t2.micro"
+  ami = "${data.aws_ami.packer_win_demo.id}"
+  security_groups = [
+    "allow_http"]
+}
+
+output "linux public dns" {
+  value = "${aws_instance.linux.public_dns}"
+}
+
+output "win public dns" {
+  value = "${aws_instance.windows.public_dns}"
 }
