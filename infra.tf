@@ -4,6 +4,15 @@ provider "aws" {
   secret_key = "${var.aws_secret_key}"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state-demo"
+    key = "demo/terraform.tfstate"
+    region = "eu-west-2"
+    dynamodb_table = "terraform-demo"
+  }
+}
+
 data "aws_ami" "packer_demo" {
   most_recent = true
   filter {
