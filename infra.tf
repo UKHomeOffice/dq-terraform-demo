@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "eu-west-2"
-}
-
 terraform {
   backend "s3" {
     bucket = "my-terraform-state-demo"
@@ -9,6 +5,10 @@ terraform {
     region = "eu-west-2"
     dynamodb_table = "terraform-demo"
   }
+}
+
+provider "aws" {
+  region = "eu-west-2"
 }
 
 data "aws_ami" "packer_linux_demo" {
